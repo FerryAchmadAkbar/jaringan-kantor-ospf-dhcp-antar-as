@@ -89,8 +89,5 @@ Enable secret dan SSH, OSPF authentication, NAT/PAT ke segmen Internet, port sec
 
 ## Penulis
 
-**Ferry Achmad Akbar** — [GitHub](https://github.com/USERNAME) · [LinkedIn](https://linkedin.com/in/USERNAME)
+**Ferry Achmad Akbar** — [GitHub](https://github.com/FerryAchmadAkbar) 
 
-## Lisensi
-
-[MIT License](LICENSE).
