@@ -1,0 +1,88 @@
+! Perangkat: Router Kantor (topology/jaringan-kantor.pkt)
+!
+version 16.6.4
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname Router
+!
+ip dhcp excluded-address 192.168.1.65
+ip dhcp excluded-address 192.168.1.1
+!
+ip dhcp pool NIRKABEL
+ network 192.168.1.64 255.255.255.192
+ default-router 192.168.1.65
+ dns-server 192.168.1.130
+ip dhcp pool KABEL
+ network 192.168.1.0 255.255.255.224
+ default-router 192.168.1.1
+ dns-server 192.168.1.130
+!
+no ip cef
+no ipv6 cef
+!
+spanning-tree mode pvst
+!
+interface GigabitEthernet0/0/0
+ no ip address
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0/0.10
+ encapsulation dot1Q 10
+ ip address 192.168.1.1 255.255.255.224
+!
+interface GigabitEthernet0/0/0.20
+ encapsulation dot1Q 20
+ ip address 192.168.1.65 255.255.255.192
+!
+interface GigabitEthernet0/0/1
+ ip address 192.168.1.157 255.255.255.252
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0/2
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Serial0/1/0
+ ip address 192.168.1.149 255.255.255.252
+ clock rate 2000000
+!
+interface Serial0/1/1
+ no ip address
+ clock rate 2000000
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router ospf 1
+ log-adjacency-changes
+ network 192.168.1.64 0.0.0.63 area 0
+ network 192.168.1.148 0.0.0.3 area 0
+ network 192.168.1.0 0.0.0.31 area 0
+!
+router bgp 200
+ bgp log-neighbor-changes
+ no synchronization
+ neighbor 192.168.1.158 remote-as 100
+ network 192.168.1.0 mask 255.255.255.224
+ network 192.168.1.64 mask 255.255.255.192
+!
+ip classless
+!
+ip flow-export version 9
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+end
